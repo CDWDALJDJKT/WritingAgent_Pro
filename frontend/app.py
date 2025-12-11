@@ -2,7 +2,11 @@ import streamlit as st
 import httpx
 import json
 import os
+<<<<<<< HEAD
 import uuid  # 引入 uuid 用于生成随机 ID
+=======
+
+>>>>>>> c1f4678ea5753baa64342355ffabad311ca1bf4b
 
 # === 1. 基础配置 ===
 st.set_page_config(
@@ -78,7 +82,15 @@ if prompt := st.chat_input("请输入写作需求..."):
     with st.chat_message("assistant"):
         message_box = st.empty()
         full_response = ""
+<<<<<<< HEAD
         payload = {"query": prompt, "thread_id": st.session_state.thread_id}
+=======
+
+        # 定义后端 API 地址
+        API_URL = os.getenv("BACKEND_URL", "http://backend:8000/chat")
+        # 假设所有用户共用一个测试线程 ID，实际可以随机生成
+        payload = {"query": prompt, "thread_id": "web_user_001"}
+>>>>>>> c1f4678ea5753baa64342355ffabad311ca1bf4b
 
         try:
             with httpx.stream("POST", API_URL, json=payload, timeout=60) as response:
@@ -103,7 +115,12 @@ if prompt := st.chat_input("请输入写作需求..."):
                 else:
                     st.error(f"服务器请求失败: {response.status_code}")
 
+<<<<<<< HEAD
         except httpx.ConnectError:
             st.error("无法连接到后端，请检查服务是否启动。")
         except Exception as e:
             st.error(f"发生未知错误: {str(e)}")
+=======
+        except httpx.RequestError as e:
+            st.error(f"无法连接到后端服务，请确认 server.py 是否已启动。\n错误详情: {e}")
+>>>>>>> c1f4678ea5753baa64342355ffabad311ca1bf4b
