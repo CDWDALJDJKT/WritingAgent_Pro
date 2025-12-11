@@ -1,36 +1,24 @@
 version: '3.8'
 
 services:
-  # === 后端服务 (FastAPI) ===
   backend:
     build: .
     command: python src/server.py
     ports:
-      - "8000:8000"  # 映射宿主机8000 -> 容器8000
+      - "8000:8000"
     volumes:
-      - ./memory.sqlite:/app/memory.sqlite # [持久化] 挂载数据库文件
+      - ./memory.sqlite:/app/memory.sqlite
     env_file:
       - .env
-    networks:
-      - app_network
 
-  # === 前端服务 (Streamlit) ===
   frontend:
     build: .
-    # [关键] 告诉前端，后端地址是 http://backend:8000/chat
     environment:
       - BACKEND_URL=http://backend:8000/chat
     command: streamlit run frontend/app.py --server.port 8501 --server.address 0.0.0.0
     ports:
-      - "8501:8501"  # 映射宿主机8501 -> 容器8501
+      - "8081:8501"
     env_file:
       - .env
     depends_on:
-      - backend      # 等后端启动了再启前端
-    networks:
-      - app_network
-
-# 定义内部网络，让前后端能用服务名互通
-networks:
-  app_network:
-    driver: bridge
+      - backend
