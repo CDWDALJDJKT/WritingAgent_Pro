@@ -5,7 +5,7 @@ langchain==1.1.0
 langchain-core==1.1.0
 langchain-openai==1.1.0
 langchain-deepseek==1.0.1
-langchain-community==0.3.0  # 你的列表中未显示此项，但langchain通常需要它，若报错请补充
+langchain-community>=0.1.0 # 你的列表中未显示此项，但langchain通常需要它，若报错请补充
 langgraph==1.0.4
 langgraph-api==0.5.27
 langgraph-checkpoint==3.0.1
