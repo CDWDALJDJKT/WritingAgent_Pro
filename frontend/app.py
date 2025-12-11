@@ -2,8 +2,7 @@ import streamlit as st
 import httpx
 import json
 import os
-# 优先读取环境变量，如果没有，默认为 http://backend:8000/chat (Docker内部通讯地址)
-API_URL = os.getenv("BACKEND_URL", "http://backend:8000/chat")
+
 
 
 # === 1. 页面配置 ===
@@ -34,7 +33,7 @@ if prompt := st.chat_input("请输入你的写作需求..."):
         full_response = ""
 
         # 定义后端 API 地址
-        API_URL = "http://localhost:8000/chat"
+        API_URL = os.getenv("BACKEND_URL", "http://backend:8000/chat")
         # 假设所有用户共用一个测试线程 ID，实际可以随机生成
         payload = {"query": prompt, "thread_id": "web_user_001"}
 
